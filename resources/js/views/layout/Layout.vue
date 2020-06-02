@@ -1,14 +1,12 @@
 <template>
     <div>
-        <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-navbar-brand href="/accounts">Account Manager</b-navbar-brand>
-
+        <b-navbar toggleable="lg" type="dark" variant="dark">
+            <b-navbar-brand href="/" :active="activePage === 'home_page'">Home</b-navbar-brand>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav v-if="authUser">
-                    <b-nav-item href="/accounts">My Accounts</b-nav-item>
-                    <b-nav-item href="/">Transactions</b-nav-item>
+                    <b-nav-item href="/accounts" :active="activePage === 'Accounts'">My Accounts</b-nav-item>
+                    <b-nav-item href="/not_found" :active="activePage === 'Not_Found'">Transactions</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
@@ -27,6 +25,7 @@
                             <b-dropdown-item href="#" @click.prevent="logout">Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </template>
+                    <b-button v-else href="/login">Login</b-button>
                 </b-navbar-nav>
             </b-collapse>
         </b-navbar>
@@ -40,6 +39,11 @@
 
     export default {
         name: "Layout",
+        computed: {
+            activePage(){
+                return this.$route.name;
+            }
+        },
         methods: {
             logout(){
                 axios({

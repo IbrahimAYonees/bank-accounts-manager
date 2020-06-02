@@ -40,7 +40,7 @@ export const login = (email, password) => {
 export const logout = () => {
     localStorage.removeItem('api_token');
     apiToken = null;
-    authUser = {};
+    authUser = null;
     setAxiosAuth(true);
     emitUpdatedAuth();
 };

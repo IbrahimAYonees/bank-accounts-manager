@@ -1,6 +1,7 @@
 import LoginPage from "@/views/LoginPage";
 import AccountsPage from '@/views/accounts/AccountsPage';
 import NotFoundPage from "@/views/NotFoundPage";
+import HomePage from '@/views/HomePage';
 import {authenticated} from "@/auth";
 
 
@@ -33,17 +34,23 @@ export default [
         beforeEnter: (to, from, next) => redirectIfAuthenticated(next),
     },
     {
-        path: '/',
+        path: '/not_found',
         name: 'Not_Found',
         component: NotFoundPage,
         meta: {
-            title: 'Not Found'
+            title: '404'
+        },
+    },
+    {
+        path: '/',
+        name: 'home_page',
+        component: HomePage,
+        meta: {
+            title: 'Home'
         }
     },
     {
         path: '*', // default page Or 404 page
-        beforeEnter: (to, from, next) => {
-            return !authenticated ? next('/login') : next('/')
-        }
-    },
+        beforeEnter: (to, from, next) => next('/not_found'),
+    }
 ];

@@ -1,7 +1,5 @@
 <template>
-    <div class="container">
-        <h1>404 Page Not Found</h1>
-    </div>
+    <b-img src="https://yourblogworks.com/wp-content/uploads/2016/12/404-error-1024x749.jpg" fluid-grow alt="Fluid-grow image"></b-img>
 </template>
 
 <script>
