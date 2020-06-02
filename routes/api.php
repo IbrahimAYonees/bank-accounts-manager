@@ -24,6 +24,9 @@ Route::put('/accounts/{account}','AccountsController@update');
 Route::patch('/accounts/{account}/deactivate','AccountsController@deactivate');
 Route::patch('/accounts/{account}/activate','AccountsController@activate');
 
+Route::get('/banks','BanksController@index');
+Route::get('/currencies','CurrenciesController@index');
+
 
 Route::get('{any?}', function () {
     return response()->json([

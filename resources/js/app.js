@@ -9,6 +9,13 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 import App from '@/views/layout/Layout';
+import VModal from 'vue-js-modal';
+import Multiselect from 'vue-multiselect';
+import Vuelidate from 'vuelidate';
+
+Vue.use(Vuelidate);
+Vue.component('multiselect', Multiselect);
+Vue.use(VModal, { dialog: true });
 
 export const bus = new Vue();
 

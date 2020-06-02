@@ -24,7 +24,7 @@ class AccountsController extends Controller
     public function index()
     {
         return new AccountsCollection(
-            Account::withRelations()->paginate(10)
+            Account::withRelations()->latest()->paginate(10)
         );
     }
 
