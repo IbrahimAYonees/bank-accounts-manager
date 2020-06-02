@@ -6,15 +6,15 @@
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav v-if="authUser">
                     <b-nav-item href="/accounts" :active="activePage === 'Accounts'">My Accounts</b-nav-item>
-                    <b-nav-item href="/not_found" :active="activePage === 'Not_Found'">Transactions</b-nav-item>
+<!--                    <b-nav-item href="/not_found" :active="activePage === 'Not_Found'">Transactions</b-nav-item>-->
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
-                    <b-nav-item-dropdown text="Lang" right>
-                        <b-dropdown-item href="#">EN</b-dropdown-item>
-                        <b-dropdown-item href="#">AR</b-dropdown-item>
-                    </b-nav-item-dropdown>
+<!--                    <b-nav-item-dropdown text="Lang" right>-->
+<!--                        <b-dropdown-item href="#">EN</b-dropdown-item>-->
+<!--                        <b-dropdown-item href="#">AR</b-dropdown-item>-->
+<!--                    </b-nav-item-dropdown>-->
                     <template v-if="authUser">
                         <b-avatar></b-avatar>
                         <b-nav-item-dropdown right>

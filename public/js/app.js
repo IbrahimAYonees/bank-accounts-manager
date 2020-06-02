@@ -1912,6 +1912,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HomePage"
 });
@@ -47966,9 +47978,34 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("This Is The Home Page")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "container mt-3" }, [
+      _c("div", [
+        _c("h1", [_vm._v("With Bank Account Manager You Can")]),
+        _vm._v(" "),
+        _c("ul", [
+          _c("li", [
+            _c("h3", [
+              _vm._v("Add List Edit Activate and Deactivate Your Bank Accounts")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("h3", [
+              _vm._v("Add List and Track Your Bank Accounts Operations")
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -48213,17 +48250,6 @@ var render = function() {
                           }
                         },
                         [_vm._v("My Accounts")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-nav-item",
-                        {
-                          attrs: {
-                            href: "/not_found",
-                            active: _vm.activePage === "Not_Found"
-                          }
-                        },
-                        [_vm._v("Transactions")]
                       )
                     ],
                     1
@@ -48234,21 +48260,6 @@ var render = function() {
                 "b-navbar-nav",
                 { staticClass: "ml-auto" },
                 [
-                  _c(
-                    "b-nav-item-dropdown",
-                    { attrs: { text: "Lang", right: "" } },
-                    [
-                      _c("b-dropdown-item", { attrs: { href: "#" } }, [
-                        _vm._v("EN")
-                      ]),
-                      _vm._v(" "),
-                      _c("b-dropdown-item", { attrs: { href: "#" } }, [
-                        _vm._v("AR")
-                      ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
                   _vm.authUser
                     ? [
                         _c("b-avatar"),
