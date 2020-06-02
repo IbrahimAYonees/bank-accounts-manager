@@ -13,6 +13,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        if(User::query()->where('email','=','ibrahim21383@gmail.com')->first()){
+            return;
+        }
+
         $user = new User();
         $user->name = 'Ibrahim';
         $user->email = 'ibrahim21383@gmail.com';

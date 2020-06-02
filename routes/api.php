@@ -17,6 +17,13 @@ Route::post('login','AuthController@login');
 Route::get('me','AuthController@me');
 Route::post('logout','AuthController@logout');
 
+Route::get('/accounts','AccountsController@index');
+Route::get('/accounts/{account}','AccountsController@show');
+Route::post('/accounts','AccountsController@store');
+Route::put('/accounts/{account}','AccountsController@update');
+Route::patch('/accounts/{account}/deactivate','AccountsController@deactivate');
+Route::patch('/accounts/{account}/activate','AccountsController@activate');
+
 
 Route::get('{any?}', function () {
     return response()->json([
