@@ -129,8 +129,8 @@
                     title = 'Deactivated'
                 }else{
                     await this.activateAccount(account.id)
-                    message = 'Account Activated Successfully'
-                    title: 'Activated'
+                    message = 'Account Activated Successfully';
+                    title = 'Activated';
                 }
                 this.makeToast('success',title,message);
                 await this.getAccounts(true);

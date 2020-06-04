@@ -13,11 +13,7 @@
                 </div>
                 <hr>
                 <div class="card-body">
-                    <div id="bank-form" :class="{
-                            'form-group':true,
-                            'has-error':$v.bank_id.$anyError
-                        }"
-                    >
+                    <div id="bank-form" class="form-group">
                         <label for="bank">Bank</label>
                         <multiselect :options="banks"
                                      :searchable="true"
@@ -30,21 +26,18 @@
                                      label="name"
                                      :internal-search="true"
                                      v-model="bank"
+                                     :class="{'is-invalid': $v.bank_id.$error}"
                                      @select="updateBank"
                                      @remove="removeBank"
                         >
                         </multiselect>
                         <div class="text-danger invalid-feedback" style="display: block;"
-                             v-if="!$v.bank_id.required"
+                             v-if="validated && !$v.bank_id.required"
                         >
                             you must choose a bank
                         </div>
                     </div>
-                    <div id="currency-form" :class="{
-                            'form-group':true,
-                            'has-error':$v.currency_id.$anyError
-                        }"
-                    >
+                    <div id="currency-form" class="form-group">
                         <label for="currency">Currency</label>
                         <multiselect :options="currencies"
                                      :searchable="true"
@@ -57,21 +50,18 @@
                                      label="name"
                                      :internal-search="true"
                                      v-model="currency"
+                                     :class="{'is-invalid': $v.currency_id.$error}"
                                      @select="updateCurrency"
                                      @remove="removeCurrency"
                         >
                         </multiselect>
                         <div class="text-danger invalid-feedback" style="display: block;"
-                             v-if="!$v.currency_id.required"
+                             v-if="validated && !$v.currency_id.required"
                         >
                             you must choose a currency
                         </div>
                     </div>
-                    <div id="type-form" :class="{
-                            'form-group':true,
-                            'has-error':$v.type.$anyError
-                        }"
-                    >
+                    <div id="type-form" class="form-group">
                         <label for="type">Type</label>
                         <multiselect :options="types"
                                      :searchable="true"
@@ -82,28 +72,26 @@
                                      placeholder="choose a type"
                                      :internal-search="true"
                                      v-model="type"
+                                     :class="{'is-invalid': $v.type.$error}"
                         >
                         </multiselect>
                         <div class="text-danger invalid-feedback" style="display: block;"
-                             v-if="!$v.type.required"
+                             v-if="validated && !$v.type.required"
                         >
                             you must choose a type
                         </div>
                     </div>
-                    <div :class="{
-                            'form-group':true,
-                            'has-error':$v.branch.$anyError
-                        }"
-                    >
+                    <div class="form-group">
                         <label for="branch">Branch</label>
                         <input type="text"
                                class="form-control"
+                               :class="{'is-invalid': $v.branch.$error}"
                                name="branch"
                                id="branch"
                                v-model="branch"
                         >
                         <div class="text-danger invalid-feedback" style="display: block;"
-                             v-if="!$v.branch.required"
+                             v-if="validated && !$v.branch.required"
                         >
                             you must type a branch
                         </div>
@@ -150,7 +138,8 @@
                 ],
                 old: null,
                 action: 'New',
-                inAction: false
+                inAction: false,
+                validated: false
             }
         },
         filters: {
@@ -213,6 +202,7 @@
             },
             async submitForm() {
                 this.$v.$touch()
+                this.validated = true;
                 if (this.$v.$invalid) {
                     return;
                 }

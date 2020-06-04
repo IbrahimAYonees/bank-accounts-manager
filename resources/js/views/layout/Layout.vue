@@ -51,7 +51,7 @@
                     url: '/api/logout'
                 }).then((response) => {
                     logout();
-                    this.$router.push({name: 'Login'});
+                    this.$router.push({name: 'login'});
                 })
             }
         }
