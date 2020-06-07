@@ -1,7 +1,7 @@
 <template>
     <section class="container">
         <div class="card col-5">
-            <h3 class="card-header text-center">Balans In Banks</h3>
+            <h3 class="card-header text-center">Balances In Banks</h3>
             <div class="card-body">
                 <canvas  id="pie-chart"></canvas>
             </div>
