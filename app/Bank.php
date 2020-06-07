@@ -9,8 +9,8 @@ class Bank extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function currenciesRates()
+    public function currencies()
     {
-        return $this->belongsToMany(Currency::class);
+        return $this->belongsToMany(Currency::class)->withPivot('rate');
     }
 }

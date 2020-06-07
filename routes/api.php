@@ -23,9 +23,18 @@ Route::post('/accounts','AccountsController@store');
 Route::put('/accounts/{account}','AccountsController@update');
 Route::patch('/accounts/{account}/deactivate','AccountsController@deactivate');
 Route::patch('/accounts/{account}/activate','AccountsController@activate');
+Route::get('/accounts/{account}/getBalance','AccountBalanceController@getBalance');
 
 Route::get('/banks','BanksController@index');
 Route::get('/currencies','CurrenciesController@index');
+
+Route::get('/transactions','TransactionsController@index');
+Route::post('/transactions/{account}','TransactionsController@create');
+
+Route::post('/doDeposit/{account}','DepositController@doDeposit');
+Route::post('/doWithdraw/{account}','WithdrawController@doWithdraw');
+Route::post('/doTransfer/{account}','TransferController@doTransfer');
+Route::post('/cancelTransfer/{transfer}','TransferController@cancelTransfer');
 
 
 Route::get('{any?}', function () {

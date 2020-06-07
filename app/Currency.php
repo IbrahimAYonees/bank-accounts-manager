@@ -11,6 +11,6 @@ class Currency extends Model
      */
     public function banksRates()
     {
-        return $this->belongsToMany(Bank::class);
+        return $this->belongsToMany(Bank::class)->withPivot('rate');
     }
 }

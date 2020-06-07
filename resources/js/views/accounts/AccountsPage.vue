@@ -3,7 +3,10 @@
         <div class="row">
             <button class="offset-9 mt-3 btn btn-dark btn-md" @click.prevent="newAccount">New Account</button>
         </div>
-        <b-overlay :show="showLoader" rounded="lg">
+        <div class="alert alert-info" v-if="noResults">
+            No Results
+        </div>
+        <b-overlay :show="showLoader" rounded="lg" v-else>
             <div class="pt-3" v-if="accounts && accounts.length" :aria-hidden="showLoader ? 'true' : null">
                 <table class="table table-striped table-hover table-bordered">
                     <thead>
@@ -26,10 +29,18 @@
                             <td>{{account.type}}</td>
                             <td>{{account.branch}}</td>
                             <td>{{account.date | calenderDate}}</td>
-                            <td>{{account.active | active}}</td>
                             <td>
-                                <button class="btn btn-dark btn-sm" @click.prevent="toggleActivateAccount(account)">
-                                    {{account.active ? 'Deactivate' : 'activate'}}
+                                <switches v-model="account.active"
+                                          theme="bootstrap"
+                                          color="primary"
+                                          text-enabled="Active"
+                                          text-disabled="Disabled"
+                                          :emit-on-mount="false"
+                                          @input="toggleActivateAccount(account)"></switches>
+                            </td>
+                            <td>
+                                <button class="btn btn-dark btn-sm" @click.prevent="showOptions(account)">
+                                    Options
                                 </button>
                                 <button class="btn btn-dark btn-sm" @click.prevent="editAccount(account)">
                                     Edit
@@ -50,6 +61,7 @@
             </div>
         </b-overlay>
         <account-modal @changed="accountsChanged"></account-modal>
+        <account-options-modal></account-options-modal>
     </section>
 </template>
 
@@ -58,12 +70,16 @@
     import moment from 'moment';
     import {BIconPencilSquare} from 'bootstrap-vue';
     import AccountModal from "./components/modals/AccountModal";
+    import AccountOptionsModal from "./components/modals/AccountOptionsModal";
+    import Switches from 'vue-switches';
 
     export default {
         name: "AccountsPage",
         components: {
             BIconPencilSquare,
-            AccountModal
+            Switches,
+            AccountModal,
+            AccountOptionsModal
         },
         computed: {
             showLoader(){
@@ -75,7 +91,8 @@
                 accounts: null,
                 currentPage: null,
                 perPage: null,
-                rows: null
+                rows: null,
+                noResults: false
             }
         },
         filters: {
@@ -112,10 +129,12 @@
                 })
             },
             getAccounts(first = false) {
+                this.noResults = false;
                 let page = first ? 1 : this.currentPage;
                 this.accounts = null;
                 this.fetchAccounts(page).then((response) => {
                     this.accounts = response.data.data;
+                    this.noResults = this.accounts.length === 0;
                     this.currentPage = response.data.meta.current_page;
                     this.perPage = response.data.meta.per_page;
                     this.rows = response.data.meta.total;
@@ -124,11 +143,11 @@
             async toggleActivateAccount(account){
                 let message,title;
                 if(account.active){
-                    await this.deactivateAccount(account.id);
+                    await this.activateAccount(account.id);
                     message = 'Account Deactivated Successfully'
                     title = 'Deactivated'
                 }else{
-                    await this.activateAccount(account.id)
+                    await this.deactivateAccount(account.id)
                     message = 'Account Activated Successfully';
                     title = 'Activated';
                 }
@@ -162,6 +181,10 @@
                     variant: variant,
                     solid: true
                 })
+            },
+            showOptions(account){
+                console.log('here');
+                this.$modal.show('account-options-modal',{account});
             }
         },
         watch: {
@@ -175,5 +198,7 @@
 </script>
 
 <style scoped>
-
+    .clickable{
+        cursor: pointer;
+    }
 </style>

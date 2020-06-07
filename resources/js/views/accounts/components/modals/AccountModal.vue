@@ -26,7 +26,7 @@
                                      label="name"
                                      :internal-search="true"
                                      v-model="bank"
-                                     :class="{'is-invalid': $v.bank_id.$error}"
+                                     :class="{'is-invalid': validated && $v.bank_id.$error}"
                                      @select="updateBank"
                                      @remove="removeBank"
                         >
@@ -50,7 +50,7 @@
                                      label="name"
                                      :internal-search="true"
                                      v-model="currency"
-                                     :class="{'is-invalid': $v.currency_id.$error}"
+                                     :class="{'is-invalid': validated && $v.currency_id.$error}"
                                      @select="updateCurrency"
                                      @remove="removeCurrency"
                         >
@@ -72,7 +72,7 @@
                                      placeholder="choose a type"
                                      :internal-search="true"
                                      v-model="type"
-                                     :class="{'is-invalid': $v.type.$error}"
+                                     :class="{'is-invalid': validated && $v.type.$error}"
                         >
                         </multiselect>
                         <div class="text-danger invalid-feedback" style="display: block;"
@@ -85,7 +85,7 @@
                         <label for="branch">Branch</label>
                         <input type="text"
                                class="form-control"
-                               :class="{'is-invalid': $v.branch.$error}"
+                               :class="{'is-invalid': validated && $v.branch.$error}"
                                name="branch"
                                id="branch"
                                v-model="branch"
@@ -109,12 +109,10 @@
                             {{action | submitAction}}
                         </button>
                     </div>
-
                 </div>
             </div>
         </template>
     </modal>
-
 </template>
 
 <script>

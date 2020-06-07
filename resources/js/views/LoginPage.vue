@@ -17,7 +17,7 @@
                     <label for="email">Email</label>
                     <input type="text"
                            class="form-control"
-                           :class="{'is-invalid': $v.email.$error}"
+                           :class="{'is-invalid': validated && $v.email.$error}"
                            name="email"
                            id="email"
                            v-model="email"
@@ -37,7 +37,7 @@
                     <label for="password">Password</label>
                     <input type="password"
                            class="form-control"
-                           :class="{'is-invalid': $v.password.$error}"
+                           :class="{'is-invalid': validated && $v.password.$error}"
                            name="password"
                            id="password"
                            v-model="password"

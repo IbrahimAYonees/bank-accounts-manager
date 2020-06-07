@@ -6,7 +6,16 @@
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav v-if="authUser">
                     <b-nav-item href="/accounts" :active="activePage === 'Accounts'">My Accounts</b-nav-item>
-<!--                    <b-nav-item href="/not_found" :active="activePage === 'Not_Found'">Transactions</b-nav-item>-->
+                    <b-nav-item href="/transactions" :active="activePage === 'transactions'">Transactions</b-nav-item>
+                    <b-nav-item href="/deposits" :active="activePage === 'deposits'">Deposits</b-nav-item>
+                    <b-nav-item href="/withdraws" :active="activePage === 'withdraws'">Withdraws</b-nav-item>
+                    <b-nav-item href="/transfers" :active="activePage === 'transfers'">Transfers</b-nav-item>
+                    <b-nav-item href="/transaction"
+                                :active="activePage === 'transaction'"
+                                v-if="activePage === 'transaction'"
+                    >
+                        New Transaction
+                    </b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
@@ -18,7 +27,6 @@
                     <template v-if="authUser">
                         <b-avatar></b-avatar>
                         <b-nav-item-dropdown right>
-                            <!-- Using 'button-content' slot -->
                             <template v-slot:button-content>
                                 <em>{{authUser.name}}</em>
                             </template>
