@@ -12,6 +12,6 @@
 - `npm run dev` Or `npm run prod` for production ready assets
 - Use `ibrahim21383@gmail.com` and password of `123456` to login
 - My database dump file link 
-`https://drive.google.com/file/d/18b90_gJbqhnlTIH2K_9FQfkQeZ_vJ48Z/view?usp=sharing`
+<https://drive.google.com/file/d/18b90_gJbqhnlTIH2K_9FQfkQeZ_vJ48Z/view?usp=sharing>
 - Database diagram link 
-`https://drive.google.com/file/d/1_-w_yLLa4CDMub8zJ5K5jTPLgGMPyjXF/view?usp=sharing`  
+<https://drive.google.com/file/d/1_-w_yLLa4CDMub8zJ5K5jTPLgGMPyjXF/view?usp=sharing>  
