@@ -24,6 +24,7 @@
 <!--                        <b-dropdown-item href="#">EN</b-dropdown-item>-->
 <!--                        <b-dropdown-item href="#">AR</b-dropdown-item>-->
 <!--                    </b-nav-item-dropdown>-->
+                    <b-nav-item href="/dashboard/analysis/bank_balance" :active="activePage === 'bank_analysis'">Dashboard</b-nav-item>
                     <template v-if="authUser">
                         <b-avatar></b-avatar>
                         <b-nav-item-dropdown right>

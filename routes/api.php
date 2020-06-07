@@ -36,6 +36,8 @@ Route::post('/doWithdraw/{account}','WithdrawController@doWithdraw');
 Route::post('/doTransfer/{account}','TransferController@doTransfer');
 Route::post('/cancelTransfer/{transfer}','TransferController@cancelTransfer');
 
+Route::get('/statistics/banks','StatisticsController@getAccountStatistics');
+
 
 Route::get('{any?}', function () {
     return response()->json([

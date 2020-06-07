@@ -7,6 +7,7 @@ import TransactionsPage from "@/views/transactions/TransactionsPage";
 import DepositsPage from "@/views/deposits/DepositsPage";
 import WithdrawsPage from "@/views/withdraws/WithdrawsPage";
 import TransfersPage from "@/views/transfers/TransfersPage";
+import BankBalancePage from "@/views/dashboard/BankBalancePage";
 import {authenticated} from "@/auth";
 
 
@@ -71,6 +72,15 @@ export default [
         component: TransfersPage,
         meta: {
             title: 'Transfers'
+        },
+        beforeEnter: (to, from, next) => redirectIfNotAuthenticated(next),
+    },
+    {
+        path: '/dashboard/analysis/bank_balance',
+        name: 'bank_analysis',
+        component: BankBalancePage,
+        meta: {
+            title: 'Bank Balance Analysis'
         },
         beforeEnter: (to, from, next) => redirectIfNotAuthenticated(next),
     },

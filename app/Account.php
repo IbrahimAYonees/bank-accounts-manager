@@ -110,7 +110,7 @@ class Account extends Model
                 $balanceInEGP -= $transfer->amount * $transfer->rate;
             }
         }
-        return $balanceInEGP;
+        return round($balanceInEGP,2);
     }
 
     public function getBalance()
