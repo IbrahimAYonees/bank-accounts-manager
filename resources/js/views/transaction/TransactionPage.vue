@@ -48,6 +48,8 @@
                     <b-card>
                         <button class="btn btn-md btn-dark" @click="addOperation('deposit')">Add Deposit</button>
                         <button class="btn btn-md btn-dark" @click="addOperation('withdraw')">Add Withdraw</button>
+                        <button class="btn btn-md btn-light offset-9" v-if="!operations.length" @click="cancelTransaction">Cancel</button>
+
                         <div class="card" v-for="operation in operations">
                             <div class="card-header">
                                 <h5 class="card-title">{{operation.type}}</h5>
