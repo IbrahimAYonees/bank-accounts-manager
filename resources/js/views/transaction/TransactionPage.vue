@@ -329,6 +329,7 @@
                 switch (this.type.value) {
                     case 'operation':
                         if(!this.validateOperations()){
+                            this.inTransaction = false;
                             return;
                         }
                         await this.startTransaction(this.account.id).then((response) => {
@@ -375,6 +376,7 @@
                         break;
                     case 'transfer':
                         if(!this.validateTransfer()){
+                            this.inTransaction = false;
                             return;
                         }
                         await this.startTransaction(this.account.id).then((response) => {
