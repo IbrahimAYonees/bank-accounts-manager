@@ -193,7 +193,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import {getBalance,fetchCurrencies,startTransaction,doDeposit,doWithdraw,doTransfer} from "@/api";
 
     export default {
         name: "TransactionPage",
@@ -243,59 +243,14 @@
                 return;
             }
             this.account = this.$route.params.account;
-            this.getBalance(this.account.id).then((response) => {
+            getBalance(this.account.id).then((response) => {
                 this.currentBalance = response.data.balance;
             });
-            this.fetchCurrencies().then((response) => {
+            fetchCurrencies().then((response) => {
                 this.currencies = response.data;
             })
         },
         methods: {
-            getBalance(id){
-                return axios({
-                    method: 'get',
-                    url: `/api/accounts/${id}/getBalance`
-                })
-            },
-            fetchCurrencies(){
-                return axios({
-                    method: 'get',
-                    url: '/api/currencies'
-                })
-            },
-            startTransaction(id){
-                return axios({
-                    method: 'post',
-                    url: `/api/transactions/${id}`
-                })
-            },
-            doDeposit(id,payload){
-                return axios({
-                    method: 'post',
-                    url: `/api/doDeposit/${id}`,
-                    data: {
-                        ...payload
-                    }
-                });
-            },
-            doWithdraw(id,payload){
-                return axios({
-                    method: 'post',
-                    url: `/api/doWithdraw/${id}`,
-                    data: {
-                        ...payload
-                    }
-                })
-            },
-            doTransfer(id,payload){
-                return axios({
-                    method: 'post',
-                    url: `/api/doTransfer/${id}`,
-                    data: {
-                        ...payload
-                    }
-                })
-            },
             addOperation(type){
                 this.creating = true;
                 let operationForm = JSON.parse(JSON.stringify(this.operationForm));
@@ -334,7 +289,7 @@
                             this.inTransaction = false;
                             return;
                         }
-                        await this.startTransaction(this.account.id).then((response) => {
+                        await startTransaction(this.account.id).then((response) => {
                             id = response.data.transaction_id;
                         })
                         for(let operation of this.operations){
@@ -345,10 +300,10 @@
                             };
                             switch (operation.type) {
                                 case 'deposit':
-                                    await this.doDeposit(this.account.id,payload);
+                                    await doDeposit(this.account.id,payload);
                                     break;
                                 case 'withdraw':
-                                    await this.doWithdraw(this.account.id,payload).catch((err) =>{
+                                    await doWithdraw(this.account.id,payload).catch((err) =>{
                                         this.$modal.show('dialog',{
                                             text: 'Transaction Failed Insufficient Balance',
                                             buttons: [
@@ -391,7 +346,7 @@
                             to_bank: this.transfer.to_bank,
                             to_bank_account_number: this.transfer.to_bank_account_number
                         };
-                        await this.doTransfer(this.account.id,payload).catch((err) => {
+                        await doTransfer(this.account.id,payload).catch((err) => {
                             this.$modal.show('dialog',{
                                 text: 'Transaction Failed Insufficient Balance',
                                 buttons: [
@@ -425,7 +380,7 @@
                             title: 'new transaction',
                             handler: () => {
                                 this.cancelTransaction();
-                                this.getBalance(this.account.id).then((response) => {
+                                getBalance(this.account.id).then((response) => {
                                     this.currentBalance = response.data.balance
                                 });
                                 this.$modal.hide('dialog');

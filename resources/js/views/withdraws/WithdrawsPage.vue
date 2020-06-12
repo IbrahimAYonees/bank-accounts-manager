@@ -142,7 +142,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import {fetchBanks,fetchTransactions} from "@/api";
     import moment from 'moment';
     import flatPickr from 'vue-flatpickr-component';
     import 'flatpickr/dist/flatpickr.css';
@@ -189,30 +189,14 @@
         created() {
             this.filters.account_number = this.$route.params.accountNumber || null;
             this.updateTransactions();
-            this.fetchBanks().then((response) => {
+            fetchBanks().then((response) => {
                 this.banks = response.data;
             });
         },
         methods: {
-            fetchTransactions(payload){
-                return axios({
-                    method: 'get',
-                    url: '/api/transactions',
-                    params: {
-                        ...payload,
-                        operations: 'withdraws'
-                    }
-                });
-            },
-            fetchBanks(){
-                return axios({
-                    method: 'get',
-                    url: '/api/banks'
-                })
-            },
             updateTransactions(){
                 this.noResults = false;
-                this.fetchTransactions(this.filters).then((response) => {
+                fetchTransactions(this.filters,'withdraws').then((response) => {
                     this.transactions = response.data.data
                     this.noResults = this.transactions.length === 0;
                     this.filters.page = response.data.meta.current_page;

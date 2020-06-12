@@ -1,3 +1,5 @@
+//all the front end authentication goes here
+
 import axios from 'axios';
 import {bus} from '@/app';
 

@@ -117,7 +117,7 @@
 
 <script>
     import {required} from 'vuelidate/lib/validators';
-    import axios from 'axios';
+    import {fetchBanks,fetchCurrencies,createAccount,editAccount} from "@/api";
 
     export default {
         name: "AccountModal",
@@ -146,10 +146,10 @@
             }
         },
         created() {
-            this.fetchBanks().then((response) => {
+            fetchBanks().then((response) => {
                 this.banks = response.data;
             });
-            this.fetchCurrencies().then((response) => {
+            fetchCurrencies().then((response) => {
                 this.currencies = response.data;
             });
         },
@@ -168,36 +168,6 @@
             }
         },
         methods: {
-            fetchBanks() {
-                return axios({
-                    method: 'get',
-                    url: '/api/banks'
-                });
-            },
-            fetchCurrencies() {
-                return axios({
-                    method: 'get',
-                    url: '/api/currencies'
-                });
-            },
-            createAccount(payload) {
-                return axios({
-                    method: 'post',
-                    url: '/api/accounts',
-                    data: {
-                        ...payload
-                    }
-                });
-            },
-            editAccount(payload, id) {
-                return axios({
-                    method: 'put',
-                    url: `/api/accounts/${id}`,
-                    data: {
-                        ...payload
-                    }
-                })
-            },
             async submitForm() {
                 this.$v.$touch()
                 this.validated = true;
@@ -214,12 +184,12 @@
                 let failed = false;
                 switch (this.action) {
                     case 'New':
-                        await this.createAccount(payload).catch((err) =>{
+                        await createAccount(payload).catch((err) =>{
                             failed = true;
                         });
                         break;
                     case 'Edit':
-                        await this.editAccount(payload, this.old.id).catch((err) =>{
+                        await editAccount(payload, this.old.id).catch((err) =>{
                             failed = true;
                         });
                         break;

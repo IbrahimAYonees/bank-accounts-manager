@@ -66,7 +66,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import {fetchAccounts,activateAccount,deactivateAccount} from "@/api";
     import moment from 'moment';
     import {BIconPencilSquare} from 'bootstrap-vue';
     import AccountModal from "./components/modals/AccountModal";
@@ -107,32 +107,11 @@
             this.getAccounts();
         },
         methods: {
-            fetchAccounts(page = 1) {
-                return axios({
-                    method: 'get',
-                    url: '/api/accounts',
-                    params: {
-                        page
-                    }
-                });
-            },
-            activateAccount(id){
-                return axios({
-                    method: 'patch',
-                    url: `/api/accounts/${id}/activate`
-                })
-            },
-            deactivateAccount(id){
-                return axios({
-                    method: 'patch',
-                    url: `/api/accounts/${id}/deactivate`
-                })
-            },
             getAccounts(first = false) {
                 this.noResults = false;
                 let page = first ? 1 : this.currentPage;
                 this.accounts = null;
-                this.fetchAccounts(page).then((response) => {
+                fetchAccounts(page).then((response) => {
                     this.accounts = response.data.data;
                     this.noResults = this.accounts.length === 0;
                     this.currentPage = response.data.meta.current_page;
@@ -143,11 +122,11 @@
             async toggleActivateAccount(account){
                 let message,title;
                 if(account.active){
-                    await this.activateAccount(account.id);
+                    await activateAccount(account.id);
                     message = 'Account Deactivated Successfully'
                     title = 'Deactivated'
                 }else{
-                    await this.deactivateAccount(account.id)
+                    await deactivateAccount(account.id)
                     message = 'Account Activated Successfully';
                     title = 'Activated';
                 }

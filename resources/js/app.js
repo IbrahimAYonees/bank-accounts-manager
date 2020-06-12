@@ -1,3 +1,7 @@
+//here is the initial of the SPA app
+//starting the vue app and injecting all globals to it
+//this the entry point to the front end app
+
 import axios from 'axios';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

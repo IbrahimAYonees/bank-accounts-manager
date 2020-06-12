@@ -35,12 +35,25 @@
                     url: '/api/statistics/banks'
                 })
             },
+            getRandomColor(colors){
+                let letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                if(colors && colors.includes(color)){
+                    this.getRandomColor();
+                }
+                return color;
+            },
             initChart(){
                 let labels = [];
                 let data = [];
+                let colors = [];
                 for(let bank in this.banks){
                     labels.push(bank);
-                    data.push(this.banks[bank])
+                    data.push(this.banks[bank]);
+                    colors.push(this.getRandomColor(colors));
                 }
                 let ctx = document.getElementById('pie-chart');
                 return new Chart(ctx,{
@@ -49,7 +62,8 @@
                         labels: labels,
                         datasets:[{
                             label: 'Balance In Banks',
-                            data: data
+                            data: data,
+                            backgroundColor: colors
                         }],
                     },
                 });
