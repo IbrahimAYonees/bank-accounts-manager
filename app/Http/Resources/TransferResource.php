@@ -26,7 +26,8 @@ class TransferResource extends JsonResource
             'balance_amount' => round(($this->amount * $this->rate) / $this->account_rate , 2),
             'to_bank' => $this->to_bank_name,
             'to_account' => $this->to_bank_account_number,
-            'date' => $this->created_at
+            'date' => $this->created_at,
+            'canceled' => $this->canceled
         ];
     }
 }

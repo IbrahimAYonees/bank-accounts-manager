@@ -16,6 +16,8 @@ import App from '@/views/layout/Layout';
 import VModal from 'vue-js-modal';
 import Multiselect from 'vue-multiselect';
 import Vuelidate from 'vuelidate';
+import router from '@/router';
+import moment from "moment";
 
 Vue.use(Vuelidate);
 Vue.component('multiselect', Multiselect);
@@ -38,12 +40,24 @@ Vue.mixin({
         updateAuth({authenticated, user}) {
             this.authenticated = authenticated;
             this.authUser = user;
+        },
+        makeToast(variant,title,message) {
+            this.$bvToast.toast(message, {
+                title: title,
+                variant: variant,
+                solid: true
+            })
         }
     },
+    filters: {
+        calenderDate(date){
+            return moment(date).format('MMMM Do YYYY');
+        },
+        numbersDate(date){
+            return moment(date).format('MM DD YYYY');
+        }
+    }
 });
-
-import router from '@/router';
-
 
 attempt().then(() => {
     const app = new Vue({

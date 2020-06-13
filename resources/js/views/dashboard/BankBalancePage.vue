@@ -11,7 +11,8 @@
 
 <script>
     import Chart from 'chart.js';
-    import axios from 'axios';
+    import {getAnalysis} from "@/api";
+    import {getRandomColor} from "@/helpers/helperFunctions";
 
     export default {
         name: "BankBalancePage",
@@ -21,7 +22,7 @@
             }
         },
         created() {
-            this.fetchBankAnalysis().then((response) => {
+            getAnalysis().then((response) => {
                 this.banks = response.data.banksBalances;
                 setTimeout(()=>{
                     this.initChart();
@@ -29,23 +30,6 @@
             })
         },
         methods: {
-            fetchBankAnalysis(){
-                return axios({
-                    method: 'get',
-                    url: '/api/statistics/banks'
-                })
-            },
-            getRandomColor(colors){
-                let letters = '0123456789ABCDEF';
-                let color = '#';
-                for (let i = 0; i < 6; i++) {
-                    color += letters[Math.floor(Math.random() * 16)];
-                }
-                if(colors && colors.includes(color)){
-                    this.getRandomColor();
-                }
-                return color;
-            },
             initChart(){
                 let labels = [];
                 let data = [];
@@ -53,7 +37,7 @@
                 for(let bank in this.banks){
                     labels.push(bank);
                     data.push(this.banks[bank]);
-                    colors.push(this.getRandomColor(colors));
+                    colors.push(getRandomColor(colors));
                 }
                 let ctx = document.getElementById('pie-chart');
                 return new Chart(ctx,{
@@ -67,7 +51,6 @@
                         }],
                     },
                 });
-
             }
         }
     }

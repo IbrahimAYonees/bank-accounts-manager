@@ -125,3 +125,10 @@ export const cancelTransfer = (transferId) => {
         url: `/api/cancelTransfer/${transferId}`
     });
 };
+
+export const getAnalysis = () => {
+    return axios({
+        method: 'get',
+        url: '/api/statistics/banks'
+    })
+};

@@ -154,13 +154,6 @@
                 await this.getAccounts(true);
                 this.makeToast('success',title,message);
             },
-            makeToast(variant,title,message) {
-                this.$bvToast.toast(message, {
-                    title: title,
-                    variant: variant,
-                    solid: true
-                })
-            },
             showOptions(account){
                 console.log('here');
                 this.$modal.show('account-options-modal',{account});

@@ -107,6 +107,9 @@ class Account extends Model
                 $balanceInEGP -= $withdraw->amount * $withdraw->rate;
             }
             foreach ($transfers as $transfer) {
+                if($transfer->caneled){
+                    continue;
+                }
                 $balanceInEGP -= $transfer->amount * $transfer->rate;
             }
         }

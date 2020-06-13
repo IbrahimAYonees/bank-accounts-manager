@@ -194,6 +194,7 @@
 
 <script>
     import {getBalance,fetchCurrencies,startTransaction,doDeposit,doWithdraw,doTransfer} from "@/api";
+    import {copyObject,isFloat} from "@/helpers/helperFunctions";
 
     export default {
         name: "TransactionPage",
@@ -253,7 +254,7 @@
         methods: {
             addOperation(type){
                 this.creating = true;
-                let operationForm = JSON.parse(JSON.stringify(this.operationForm));
+                let operationForm = copyObject(this.operationForm);
                 operationForm.type = type;
                 this.operations.push(operationForm);
             },
@@ -270,7 +271,7 @@
                         break;
                     case 'transfer':
                         this.transferVisible = true;
-                        this.transfer = JSON.parse(JSON.stringify(this.transferForm))
+                        this.transfer = copyObject(this.transferForm);
                         break;
                 }
             },
@@ -336,7 +337,7 @@
                             this.inTransaction = false;
                             return;
                         }
-                        await this.startTransaction(this.account.id).then((response) => {
+                        await startTransaction(this.account.id).then((response) => {
                             id = response.data.transaction_id;
                         })
                         let payload = {
@@ -403,6 +404,7 @@
             validateOperations(){
                 let isValid = true;
                 for(let operation of this.operations){
+                    operation.errors = {};
                     if(!operation.currency){
                         isValid = false;
                         if(!operation.errors){
@@ -418,7 +420,7 @@
                             operation.errors = {};
                         }
                         operation.errors.amount = 'you must enter amount';
-                    }else if(!this.isValidAmount(operation.amount)){
+                    }else if(!isFloat(operation.amount)){
                         isValid = false;
                         if(!operation.errors){
                             operation.errors = {};
@@ -426,11 +428,12 @@
                         operation.errors.amount = 'you must enter a valid amount';
                     }
                 }
-                this.operations = JSON.parse(JSON.stringify(this.operations));
+                this.operations = copyObject(this.operations);
                 return isValid;
             },
             validateTransfer(){
                 let isValid = true;
+                this.transfer.errors = {};
                 if(!this.transfer.to_bank){
                     isValid = false;
                     if(!this.transfer.errors){
@@ -460,18 +463,15 @@
                         this.transfer.errors = {};
                     }
                     this.transfer.errors.amount = 'you must enter amount';
-                }else if(!this.isValidAmount(this.transfer.amount)){
+                }else if(!isFloat(this.transfer.amount)){
                     isValid = false;
                     if(!this.transfer.errors){
                         this.transfer.errors = {};
                     }
                     this.transfer.errors.amount = 'you must enter a valid amount';
                 }
-                this.transfer = JSON.parse(JSON.stringify(this.transfer));
+                this.transfer = copyObject(this.transfer);
                 return isValid;
-            },
-            isValidAmount(amount){
-                return !isNaN(parseFloat(amount));
             }
         }
 

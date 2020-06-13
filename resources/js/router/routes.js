@@ -8,16 +8,7 @@ import DepositsPage from "@/views/deposits/DepositsPage";
 import WithdrawsPage from "@/views/withdraws/WithdrawsPage";
 import TransfersPage from "@/views/transfers/TransfersPage";
 import BankBalancePage from "@/views/dashboard/BankBalancePage";
-import {authenticated} from "@/auth";
-
-
-const redirectIfAuthenticated = (next) => {
-    authenticated() ? next('/accounts') : next();
-};
-
-const redirectIfNotAuthenticated = (next) => {
-    !authenticated() ? next({name: 'login'}) : next();
-};
+import {redirectIfAuthenticated,redirectIfNotAuthenticated} from "@/router/middleware";
 
 
 export default [
