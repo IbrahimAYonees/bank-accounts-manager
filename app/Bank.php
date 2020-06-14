@@ -13,4 +13,12 @@ class Bank extends Model
     {
         return $this->belongsToMany(Currency::class)->withPivot('rate');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
 }

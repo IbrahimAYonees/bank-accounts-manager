@@ -305,28 +305,7 @@
                                     break;
                                 case 'withdraw':
                                     await doWithdraw(this.account.id,payload).catch((err) =>{
-                                        this.$modal.show('dialog',{
-                                            text: 'Transaction Failed Insufficient Balance',
-                                            buttons: [
-                                                {
-                                                    title: 'new transaction',
-                                                    handler: () => {
-                                                        this.cancelTransaction();
-                                                        this.$modal.hide('dialog');
-                                                    }
-                                                },
-                                                {
-                                                    title: 'go to accounts',
-                                                    handler: () => {
-                                                        this.cancelTransaction();
-                                                        this.$router.push({
-                                                            name: 'Accounts'
-                                                        });
-                                                        this.$modal.hide('dialog');
-                                                    }
-                                                },
-                                            ]
-                                        });
+                                        this.showFailedDialog();
                                     });
                                     break;
                             }
@@ -348,57 +327,11 @@
                             to_bank_account_number: this.transfer.to_bank_account_number
                         };
                         await doTransfer(this.account.id,payload).catch((err) => {
-                            this.$modal.show('dialog',{
-                                text: 'Transaction Failed Insufficient Balance',
-                                buttons: [
-                                    {
-                                        title: 'new transaction',
-                                        handler: () => {
-                                            this.cancelTransaction();
-                                            this.$modal.hide('dialog');
-                                        }
-                                    },
-                                    {
-                                        title: 'go to accounts',
-                                        handler: () => {
-                                            this.cancelTransaction();
-                                            this.$router.push({
-                                                name: 'Accounts'
-                                            });
-                                            this.$modal.hide('dialog');
-                                        }
-                                    },
-                                ]
-                            });
-
+                            this.showFailedDialog();
                         })
                         break;
                 }
-                this.$modal.show('dialog',{
-                    text: 'Transaction Completed Successfully',
-                    buttons: [
-                        {
-                            title: 'new transaction',
-                            handler: () => {
-                                this.cancelTransaction();
-                                getBalance(this.account.id).then((response) => {
-                                    this.currentBalance = response.data.balance
-                                });
-                                this.$modal.hide('dialog');
-                            }
-                        },
-                        {
-                            title: 'go to accounts',
-                            handler: () => {
-                                this.cancelTransaction();
-                                this.$router.push({
-                                    name: 'Accounts'
-                                });
-                                this.$modal.hide('dialog');
-                            }
-                        },
-                    ]
-                });
+                this.showSuccessfulDialog();
                 this.inTransaction = false;
             },
             validateOperations(){
@@ -472,6 +405,57 @@
                 }
                 this.transfer = copyObject(this.transfer);
                 return isValid;
+            },
+            showFailedDialog(){
+                this.$modal.show('dialog',{
+                    text: 'Transaction Failed Insufficient Balance',
+                    buttons: [
+                        {
+                            title: 'new transaction',
+                            handler: () => {
+                                this.cancelTransaction();
+                                this.$modal.hide('dialog');
+                            }
+                        },
+                        {
+                            title: 'go to accounts',
+                            handler: () => {
+                                this.cancelTransaction();
+                                this.$router.push({
+                                    name: 'Accounts'
+                                });
+                                this.$modal.hide('dialog');
+                            }
+                        },
+                    ]
+                });
+            },
+            showSuccessfulDialog(){
+                this.$modal.show('dialog',{
+                    text: 'Transaction Completed Successfully',
+                    buttons: [
+                        {
+                            title: 'new transaction',
+                            handler: () => {
+                                this.cancelTransaction();
+                                getBalance(this.account.id).then((response) => {
+                                    this.currentBalance = response.data.balance
+                                });
+                                this.$modal.hide('dialog');
+                            }
+                        },
+                        {
+                            title: 'go to accounts',
+                            handler: () => {
+                                this.cancelTransaction();
+                                this.$router.push({
+                                    name: 'Accounts'
+                                });
+                                this.$modal.hide('dialog');
+                            }
+                        },
+                    ]
+                });
             }
         }
 

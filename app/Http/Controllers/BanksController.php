@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Bank;
+use App\Http\Resources\BankResource;
 
 class BanksController extends Controller
 {
@@ -18,8 +19,11 @@ class BanksController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Bank::all());
+        $banks = $request['withAccounts'] ?
+            BankResource::collection(Bank::query()->with('accounts')->get()) :
+            Bank::all();
+        return response()->json($banks);
     }
 }

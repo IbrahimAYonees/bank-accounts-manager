@@ -47,10 +47,13 @@ export const deactivateAccount = (accountId) => {
     });
 };
 
-export const fetchBanks = () => {
+export const fetchBanks = (withAccounts) => {
     return axios({
         method: 'get',
-        url: '/api/banks'
+        url: '/api/banks',
+        params: {
+            withAccounts
+        }
     });
 };
 
